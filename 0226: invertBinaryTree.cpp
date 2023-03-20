@@ -18,15 +18,15 @@ public:
             return root;
         }
 
-        if(!root->left && !root->right){
+        if(root->left || root->right){
 
-            return root;
+            auto left = invertTree(root->left);
+            auto right = invertTree(root->right);
+            root->left = right;
+            root->right = left;
         }
 
-        auto left = invertTree(root->left);
-        auto right = invertTree(root->right);
-        root->left = right;
-        root->right = left;
+        
 
         return root;
     }
