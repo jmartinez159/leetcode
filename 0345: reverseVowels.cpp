@@ -2,30 +2,21 @@ class Solution {
 public:
     string reverseVowels(string s) {
         
-        string v = "AEIOUaeiou";
-        int i = 0;
-        int k = s.size()-1;
-        while(i < k){
+        vector<int> indx;
+        vector<char> vows;
+        string check = "AEIOUaeiou";
+        for(int i = 0; i < s.size(); i++){
 
-            int index = v.find(s[i]);
-            if(index != -1){
-
-                while(true){
-
-                    if(v.find(s[k]) != -1 || i == k){
-
-                        break;
-                    }
-
-                    k--;
-                }
-                
-                char c = s[i];
-                s[i] = s[k];
-                s[k] = c;
-                k--;
+            if(check.find(s[i]) != -1){
+                indx.push_back(i);
+                vows.push_back(s[i]);
             }
-            i++;
+        }
+
+        for(int i = 0; i<indx.size(); i++){
+
+            int cur = indx.size()-1-i;
+            s[indx[cur]] = vows[i];
         }
 
         return s;
