@@ -1,12 +1,8 @@
 class Solution:
     def arithmeticTriplets(self, nums: List[int], diff: int) -> int:
         ans = 0
+        numSet = set(nums)
         for i in range(len(nums)):
-            for j in range(i+1, len(nums)):
-                if nums[j]-nums[i] != diff:
-                    continue
-                for k in range(j+1, len(nums)):
-                    if nums[k] - nums[j] != diff:
-                        continue
-                    ans +=1
+            if nums[i] + diff in numSet and nums[i]+diff+diff in numSet:
+                ans +=1
         return ans
