@@ -1,43 +1,43 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        # check for rotting oranges
-        indexQ = deque()
-        freshOranges = 0
+        freshOrange = 0
+        queueRot = deque()
+        ROWS, COLS = len(grid), len(grid[0])
         res = -1
-        m = len(grid)
-        n = len(grid[0])
-        for row in range(m):
-            for col in range(n):
+        for row in range(ROWS):
+            for col in range(COLS):
                 if grid[row][col] == 2:
-                    indexQ.append((row,col))
+                    queueRot.append((row,col))
                 if grid[row][col] == 1:
-                    freshOranges += 1
+                    freshOrange += 1
 
-        if freshOranges == 0:
+        if freshOrange == 0:
             return 0
-        # check for any adjacent fresh oranges
-        while indexQ:
-            for i in range(len(indexQ)):
-                x,y = indexQ.popleft()
-                if x-1 >= 0 and grid[x-1][y] == 1:
-                    grid[x-1][y] = 2
-                    indexQ.append((x-1,y))
-
-                if y+1 < n and grid[x][y+1] == 1:
-                    grid[x][y+1] = 2
-                    indexQ.append((x,y+1))
-
-                if x+1 < m and grid[x+1][y] == 1:
-                    grid[x+1][y] = 2
-                    indexQ.append((x+1,y))
-
-                if y-1 >= 0 and grid[x][y-1] == 1:
-                    grid[x][y-1] = 2
-                    indexQ.append((x,y-1))
+        
+        while queueRot:
             res += 1
-        for row in range(m):
-            for col in range(n):
-                if grid[row][col] == 1:
-                    return -1
+            for i in range(len(queueRot)):
+                ro, co = queueRot.popleft()
+                
+                if ro-1 >= 0 and grid[ro-1][co] == 1:
+                    freshOrange -= 1
+                    grid[ro-1][co] = 2
+                    queueRot.append((ro-1, co))
+                
+                if ro+1 < ROWS and grid[ro+1][co] == 1:
+                    freshOrange -= 1
+                    grid[ro+1][co] = 2
+                    queueRot.append((ro+1, co))
+
+                if co-1 >= 0 and grid[ro][co-1] == 1:
+                    freshOrange -= 1
+                    grid[ro][co-1] = 2
+                    queueRot.append((ro, co-1))
+
+                if co+1 < COLS and grid[ro][co+1] == 1:
+                    freshOrange -= 1
+                    grid[ro][co+1] = 2
+                    queueRot.append((ro, co+1))
+        if freshOrange > 0:
+            return -1
         return res
-        # update table and repeat step 1
