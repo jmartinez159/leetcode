@@ -9,23 +9,21 @@ class Node:
 from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        if not node:
-            return None
-        q = deque()
-        clone = {}
-        q.append(node)
-        clone[node] = None
-        while q:
-            cur = q.popleft()
-            clone[cur] = Node(cur.val)
-            for neighbor in cur.neighbors:
-                if neighbor not in clone:
-                    print('adding to q:',neighbor.val)
-                    q.append(neighbor)
-                    clone[neighbor] = None
-
-        for original, c in clone.items():
-            for neighbor in original.neighbors:
-                c.neighbors.append(clone[neighbor])
-
-        return clone[node]
+        clones = {}
+        queue = deque()
+        if node is None:
+            return node
+        queue.append(node)
+        clones[node] = None
+        while queue:
+            curr = queue.popleft()
+            clones[curr] = Node(curr.val)
+            for neighbor in curr.neighbors:
+                if neighbor not in clones:
+                    clones[neighbor] = None
+                    queue.append(neighbor)
+        
+        for origin, clone in clones.items():
+            for neighbor in origin.neighbors:
+                clone.neighbors.append(clones[neighbor])
+        return clones[node]
