@@ -1,17 +1,20 @@
 class Solution {
 public:
+
+    map<int,int> memo;
+
     int climbStairs(int n) {
+        
+        if(memo.contains(n))
+            return memo[n];
 
-        int len = 2;
-        int a = 1, b = 1;
-        while(n >= len){
+        if(n == 0)
+            return 1;
 
-            int c = a + b;
-            a = b;
-            b = c;
-            len++;
-        }
+        if(n < 0)
+            return 0;
 
-        return b;
+        memo[n] = climbStairs(n-1)+climbStairs(n-2);
+        return memo[n];
     }
 };
