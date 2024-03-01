@@ -1,7 +1,7 @@
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
         opens = []
-        invalids = []
+        invalids = set()
         res = ''
         for i in range(len(s)):
             if s[i] == '(':
@@ -10,11 +10,11 @@ class Solution:
                 if len(opens) > 0:
                     opens.pop()
                 else:
-                    invalids.append(i)
+                    invalids.add(i)
         
         while len(opens) > 0:
-            invalids.append(opens.pop())
-            
+            invalids.add(opens.pop())
+
         for i in range(len(s)):
             if i in invalids:
                 continue
