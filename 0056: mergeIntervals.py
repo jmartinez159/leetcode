@@ -4,7 +4,6 @@ class Solution:
         intervals.sort()
         curr = -1
         for x,y in intervals:
-            print(x, curr)
             if x > curr:
                 res.append([x,y])
             elif res[len(res)-1][1] > y:
