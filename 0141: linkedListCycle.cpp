@@ -9,18 +9,15 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        
-        set<ListNode*> check;
-        ListNode* current = head;
-        while(current != nullptr){
+        ListNode *fast = head;
+        ListNode *slow = head;
+        while(fast && fast->next){
 
-            if(check.count(current)){
-
+            fast = fast->next->next;
+            slow = slow->next;
+            if(slow == fast){
                 return true;
             }
-
-            check.insert(current);
-            current = current->next;
         }
 
         return false;
